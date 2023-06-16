@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Button, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface NewsItem {
   urlToImage: string;
@@ -11,7 +12,7 @@ interface NewsItem {
 
 const FavoritesNews: React.FC = () => {
   const [favoriteNewsItems, setFavoriteNewsItems] = useState<NewsItem[]>([]);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   useEffect(() => {
     getFavoriteNewsItems();

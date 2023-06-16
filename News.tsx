@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+
 
 interface NewsItem {
   urlToImage: string;
@@ -10,7 +13,7 @@ interface NewsItem {
 }
 
 const News = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
   const [searchText, setSearchText] = useState('');
 
@@ -21,7 +24,7 @@ const News = () => {
   const fetchNewsData = async () => {
     const apiKey = '6e8bbe33b0c04603b6664ceda354fb38';
     const textToSearch = searchText || 'example';
-    const url = `https://newsapi.org/v2/everything?q=${textToSearch}&from=2023-05-20&sortBy=publishedAt&apiKey=${apiKey}`;
+    const url = `https://newsapi.org/v2/everything?q=${textToSearch}&from=2023-05-24&sortBy=publishedAt&apiKey=${apiKey}`;
 
     try {
       const response = await fetch(url);

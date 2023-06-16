@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 interface NewsItem {
   urlToImage: string;
@@ -10,16 +11,13 @@ interface NewsItem {
   description: string;
 }
 
-type SingleNewsNavigationProp = StackNavigationProp<RootStackParamList, 'SingleNews'>;
-type SingleNewsRouteProp = RouteProp<RootStackParamList, 'SingleNews'>;
-
 type Props = {
-  route: SingleNewsRouteProp;
-  navigation: SingleNewsNavigationProp;
+  route: RouteProp<ParamListBase, 'SingleNews'>;
+  navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 const SingleNews: React.FC<Props> = ({ route, navigation }) => {
-  const { newsItem } = route.params;
+  const { newsItem } = route.params as { newsItem: NewsItem };
   const { urlToImage, title, description } = newsItem;
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -164,21 +162,3 @@ const styles = StyleSheet.create({
 });
 
 export default SingleNews;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
