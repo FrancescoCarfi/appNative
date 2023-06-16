@@ -30,7 +30,7 @@ const SingleNews: React.FC<Props> = ({ route, navigation }) => {
       const favoriteNewsItemsJSON = await AsyncStorage.getItem('favoriteNewsItems');
       if (favoriteNewsItemsJSON) {
         const favoriteNewsItems = JSON.parse(favoriteNewsItemsJSON);
-        const isFavorite = favoriteNewsItems.some((item: NewsItem) => item.title === title);
+        const isFavorite = favoriteNewsItems.some(({title}: NewsItem) => title === title);
         setIsFavorite(isFavorite);
       }
     } catch (error) {
@@ -47,9 +47,7 @@ const SingleNews: React.FC<Props> = ({ route, navigation }) => {
       }
 
       const isAlreadyFavorite = favoriteNewsItems.some(item => item.title === title);
-      if (isAlreadyFavorite) {
-        return;
-      } else {
+      if (!isAlreadyFavorite) {
         favoriteNewsItems.push(newsItem);
         await AsyncStorage.setItem('favoriteNewsItems', JSON.stringify(favoriteNewsItems));
         setIsFavorite(true);
@@ -78,9 +76,7 @@ const SingleNews: React.FC<Props> = ({ route, navigation }) => {
     }
   };
 
-  const handleViewFavorites = () => {
-    navigation.navigate('FavoritesNews');
-  };
+  const handleViewFavorites = () => navigation.navigate('FavoritesNews');
 
   return (
     <View style={styles.container}>
